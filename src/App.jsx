@@ -7,10 +7,12 @@ import Projects from './pages/projects'
 import Contact from './pages/Contact'
 import Footer from './pages/Footer'
 import { Providers } from './pages/Providers'
+import { PrimeReactProvider } from 'primereact/api';
 
 const App = () => {
   return (
     <>
+    <PrimeReactProvider>
     <Providers>
     <Navbar/>
     <Hero/>
@@ -20,6 +22,7 @@ const App = () => {
     <Contact/>
     <Footer/>
     </Providers>
+    </PrimeReactProvider>
     </>
   )
 }
