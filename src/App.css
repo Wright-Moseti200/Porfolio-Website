@@ -27,17 +27,6 @@ body{
   height: 100vh;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(350px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animation {
-  animation: fadeIn linear;
-  animation-timeline: view();
-  animation-range: entry 0% cover 50%;
-  animation-duration: 2s;
-}
 
 @layer base {
   :root {
