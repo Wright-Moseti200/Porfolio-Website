@@ -13,6 +13,7 @@
     "@heroui/react": "^2.8.5",
     "@heroui/toast": "^2.0.17",
     "@radix-ui/react-slot": "^1.2.4",
+    "@react-three/fiber": "^9.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.26",
@@ -22,9 +23,12 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-toastify": "^11.0.5",
+    "react-vanilla-tilt": "^1.0.0",
     "tailwind-merge": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.9.3"
+    "three": "^0.167.1",
+    "typescript": "^5.9.3",
+    "vanilla-tilt": "^1.8.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

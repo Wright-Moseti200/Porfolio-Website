@@ -16,7 +16,6 @@ const Services = () => {
             <div className='bg-black text-white text-center h-0'>January - March</div>
             </div>
           </div>
-
           <ul className='mt-2 text-black' >
             <li>Support high-availability digital revenue infrastructure serving Kenya's tax collection system</li>
             <li>Provide end-user technical support and troubleshoot critical hardware/software issues for government operations</li>
