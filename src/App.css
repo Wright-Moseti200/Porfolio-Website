@@ -46,6 +46,7 @@ body{
   animation-timeline: view();
   animation-timing-function:ease-out;
   animation-range: entry 0% cover 50%;
+  animation-fill-mode: forwards;
 }
 
 @layer base {
