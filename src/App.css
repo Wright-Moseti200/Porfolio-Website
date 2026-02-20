@@ -42,7 +42,7 @@ body{
 .animation {
   animation-name: fadeInUp;
   animation-timeline: view();
-  animation-timing-function:ease-out;
+  animation-timing-function:linear;
   animation-range: entry 0% cover 50%;
 }
 
