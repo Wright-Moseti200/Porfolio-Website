@@ -27,6 +27,27 @@ body{
   height: 100vh;
 }
 
+/* Fade in and rise up animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(700px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animation {
+  animation-name: fadeInUp;
+  animation-duration: 2s;
+  animation-timeline: view();
+  animation-timing-function:ease-out;
+  animation-range: entry 0% cover 50%;
+  animation-delay: 0.1s;
+  scroll-behavior: smooth;
+}
 
 @layer base {
   :root {

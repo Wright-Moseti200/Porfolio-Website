@@ -25,7 +25,7 @@ const Navbar = () => {
         <div className={`transition-all duration-300 ease-in-out overflow-hidden lg:overflow-visible w-full lg:w-1/3 flex flex-col lg:flex-row justify-around items-center gap-4 lg:gap-0 lg:mt-0 ${isOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0 lg:max-h-full lg:opacity-100'}`}>
        <a href='/'><p className="cursor-pointer hover:text-gray-600">Home</p></a>
        <a href='#about'><p className="cursor-pointer hover:text-gray-600">About me</p></a>
-       <a href='#services'><p className="cursor-pointer hover:text-gray-600">Services</p></a>
+       <a href='#work'><p className="cursor-pointer hover:text-gray-600">Experience</p></a>
        <a href="#projects"><p className="cursor-pointer hover:text-gray-600">Projects</p></a>
 
           {/* Mobile Connect Button (Optional to show here or separate) */}

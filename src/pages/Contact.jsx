@@ -38,7 +38,7 @@ const Contact = () => {
             </div>
             <textarea className='mt-5 lg:mt-10 border p-5 rounded-sm w-full lg:w-[800px] h-60 lg:h-80 outline-none border-black resize-none' placeholder='Enter your message' name='message'>
             </textarea>
-            <button type='submit' className='mt-10 border p-4 pr-7 pl-7 rounded-full border-black w-full lg:w-auto'>Submit now</button>
+            <button type='submit' className='mt-10 border p-4 pr-7 pl-7 rounded-full border-black w-full lg:w-auto bg-white'>Submit now</button>
             <ToastContainer />
           </div>
         </form>

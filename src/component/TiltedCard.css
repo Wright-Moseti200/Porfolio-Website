@@ -9,6 +9,13 @@
   justify-content: center;
 }
 
+@media (max-width: 1023px) {
+  .tilted-card-figure {
+    perspective: none;
+    height: auto;
+  }
+}
+
 .tilted-card-mobile-alert {
   position: absolute;
   top: 1rem;
@@ -31,6 +38,13 @@
   transform-style: preserve-3d;
 }
 
+@media (max-width: 1023px) {
+  .tilted-card-inner {
+    transform-style: flat;
+    position: static;
+  }
+}
+
 .tilted-card-img {
   position: absolute;
   top: 0;
@@ -41,6 +55,16 @@
   transform: translateZ(0);
 }
 
+@media (max-width: 1023px) {
+  .tilted-card-img {
+    will-change: auto;
+    position: relative;
+    top: auto;
+    left: auto;
+    display: block;
+  }
+}
+
 .tilted-card-overlay {
   position: absolute;
   top: 0;
@@ -48,6 +72,13 @@
   z-index: 2;
   will-change: transform;
   transform: translateZ(30px);
+}
+
+@media (max-width: 1023px) {
+  .tilted-card-overlay {
+    will-change: auto;
+    transform: translateZ(0);
+  }
 }
 
 .tilted-card-caption {
@@ -63,3 +94,4 @@
   opacity: 0;
   z-index: 3;
 }
+
