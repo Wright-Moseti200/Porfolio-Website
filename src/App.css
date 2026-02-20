@@ -45,7 +45,6 @@ body{
   animation-timeline: view();
   animation-timing-function:ease-out;
   animation-range: entry 0% cover 50%;
-  animation-delay: 0.1s;
   scroll-behavior: smooth;
 }
 
