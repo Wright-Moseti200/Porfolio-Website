@@ -1,6 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import "../App.css"
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+
 const Contact = () => {
   const [result, setResult] = useState("");
 
@@ -25,9 +29,21 @@ const Contact = () => {
       setResult(data.message);
     }
   };
+
+  useEffect(() => {
+          AOS.init({
+              duration: 2000, // Animation duration in milliseconds
+              once: true, // Whether animation should happen only once
+          });
+      }, []);
   return (
     <>
-      <div className='mt-14 px-4 lg:px-0 animation contact' id='contact'>
+      <div className='mt-14 px-4 lg:px-0 contact' id='contact'
+      data-aos="fade-down"
+    data-aos-once="false" 
+    data-aos-mirror="true"
+    data-aos-duration="1200"
+      >
         <h1 className='text-center font-semibold text-4xl lg:text-5xl'>Get in touch</h1>
         <form onSubmit={onSubmit}>
           <div className='flex flex-col w-full justify-center items-center mt-10'>

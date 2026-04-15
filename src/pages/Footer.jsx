@@ -1,6 +1,7 @@
 import React from 'react'
 import "../App.css"
 const Footer = () => {
+  let date = new Date();
   return (
     <footer className="w-full bg-black text-white border-t border-gray-800 mt-10">
       <div className="flex w-full flex-col lg:flex-row justify-around items-center p-8 h-auto lg:h-40 gap-6 lg:gap-0">
@@ -8,7 +9,7 @@ const Footer = () => {
         {/* Brand Section */}
         <div className="flex flex-col items-center lg:items-start">
           <h1 className='font-bold text-3xl'>Wright</h1>
-          <p className="text-sm text-gray-400 mt-2">© 2024 All rights reserved.</p>
+          <p className="text-sm text-gray-400 mt-2">© {date.getFullYear()} All rights reserved.</p>
         </div>
 
         {/* Navigation Links */}

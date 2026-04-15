@@ -5,7 +5,7 @@ import TiltedCard from '@/component/TiltedCard'
 const Hero = () => {
   return (
     <>
-      <div className='w-full h-auto lg:h-[600px] flex flex-col lg:flex-row justify-around items-center mt-14 gap-10 lg:gap-5 px-4 lg:px-0 animation'>
+      <div className='w-full h-auto lg:h-[600px] flex flex-col lg:flex-row justify-around items-center mt-14 gap-10 lg:gap-5 px-4 lg:px-0'>
         <div className='flex flex-col items-center lg:items-baseline justify-center lg:justify-end h-auto lg:h-[600px] text-center lg:text-left'>
           <h1 className='text-4xl lg:text-8xl w-full lg:w-32 leading-tight lg:leading-normal font-semibold'>Fullstack Web Developer</h1>
         </div>

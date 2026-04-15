@@ -46,15 +46,17 @@ const App = () => {
       </div>
       <div className='relative z-10 w-full'>
         <Providers>
-          <AnimatedContent>
           <Navbar/>
-          <Hero/>
-          </AnimatedContent>
-          <Aboutme/>
-          <Services/>
-          <Projects/>
-          <Contact/>
-          <Footer/>
+          <div className="pt-14 lg:pt-16">
+            <AnimatedContent>
+            <Hero/>
+            </AnimatedContent>
+            <Aboutme/>
+            <Services/>
+            <Projects/>
+            <Contact/>
+            <Footer/>
+          </div>
         </Providers>
       </div>
     </>

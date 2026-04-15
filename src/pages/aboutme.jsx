@@ -1,10 +1,24 @@
-import React from 'react'
-
+import React,{useEffect} from 'react'
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import "../App.css"
+
+
+
 const Aboutme = () => {
+  useEffect(() => {
+            AOS.init({
+                duration: 2000, // Animation duration in milliseconds
+                once: true, // Whether animation should happen only once
+            });
+        }, []);
   return (
     <>
-      <div className='mt-14 px-4 lg:px-0 animation' id="about">
+      <div className='mt-14 px-4 lg:px-0' id="about" data-aos="fade-down"
+    data-aos-once="false" 
+    data-aos-mirror="true"
+    data-aos-duration="1200"
+    >
         <h1 className='text-center text-4xl lg:text-5xl font-semibold'>About me & Services</h1>
         <div className=' flex flex-col lg:flex-row mt-20  justify-center items-center gap-5'>
           <div className='flex flex-col w-full max-w-sm lg:w-96 p-6 border border-black rounded-sm bg-white'>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import Hotelpic from "../assets/Hotel-booking-website-picture.PNG";
 import foodpic from "../assets/Food-ordering-website-picture.PNG";
 import JobPic from  "../assets/Job-Portal-website.PNG";
@@ -6,13 +6,30 @@ import terminal from "../assets/Ai-terminal-chatbot-2.PNG";
 import netflix from "../assets/Netflix-clone-picture.PNG";
 import spotify from "../assets/Spotify-clone-picture.PNG";
 import landing from  "../assets/landing-page-image.PNG";
+import eccomerce from "../assets/Eccomerce website.png";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Projects = () => {
+  useEffect(() => {
+            AOS.init({
+                duration: 2000, // Animation duration in milliseconds
+                once: true, // Whether animation should happen only once
+            });
+        }, []);
   return (
     <>
-      <div className='mt-14 px-4 lg:px-0 animation projects' id='projects'>
+      <div className='mt-14 px-4 lg:px-0  projects' id='projects' data-aos="fade-down"
+    data-aos-once="false" 
+    data-aos-mirror="true"
+    data-aos-duration="1200">
         <h1 className='text-center font-semibold text-4xl lg:text-5xl'>Projects</h1>
         <div className='mt-10 grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-5 w-full justify-items-center'>
+           <a href='https://eccomercewebsite123.netlify.app' className='bg-white'>
+          <img src={eccomerce} className=' w-[400px] rounded bg-white'/>
+          <h1 className='font-bold'>Eccomerce Website</h1>
+          <p>React,Mongodb,Express & Node</p>
+        </a>
         <a href='https://hotelbookingwebiste.netlify.app' className='bg-white'>
           <img src={Hotelpic} className=' w-[400px] rounded bg-white'/>
           <h1 className='font-bold'>Hotel Booking Website</h1>
@@ -31,22 +48,22 @@ const Projects = () => {
          <a href='https://github.com/Wright-Moseti200/AI_chatbot.git' className='bg-white'>
           <img src={terminal} className=' w-[400px] rounded bg-white'/>
           <h1 className='font-bold'>Ai terminal chatbot</h1>
-          <p>React,Mongodb,Express & Node</p>
+          <p>Express,Node & Gemini api</p>
         </a>
          <a href='https://breakernefliux.netlify.app' className='bg-white'>
           <img src={netflix} className=' w-[400px] rounded bg-white'/>
           <h1 className='font-bold'>Netflix</h1>
-          <p>React,Mongodb,Express & Node</p>
+          <p>Html,Css,Javascript,React,Firebase & Tmbd api</p>
         </a>
          <a href='https://spotifyclone12000.netlify.app' className='bg-white'>
           <img src={spotify} className=' w-[400px] rounded bg-white'/>
           <h1 className='font-bold'>Spotify</h1>
-          <p>React,Mongodb,Express & Node</p>
+          <p>Html,css,Javascript & React</p>
         </a>
          <a href='https://educationalsite2.netlify.app' className='bg-white'>
           <img src={landing} className=' w-[400px] rounded bg-white'/>
           <h1 className='font-bold'>Landing page</h1>
-          <p>React,Mongodb,Express & Node</p>
+          <p>Html,Css,Javascript & React</p>
         </a>
         </div>
       </div>
