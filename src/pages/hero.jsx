@@ -49,7 +49,7 @@ const Hero = () => {
             showTooltip
             displayOverlayContent
           />
-          <p className='w-full lg:w-40 text-center lg:text-left text-pretty font-semibold'>Hi, i`m Wright Gichana, A Fullstack web developer
+          <p className='mt-6 lg:mt-0 w-full lg:w-40 text-center lg:text-left text-pretty font-semibold'>Hi, i`m Wright Gichana, A Fullstack web developer
             creating intuitive digital experiences
           </p>
         </div>

@@ -16,28 +16,28 @@ const projectList = [
     image: eccomerce,
     desc: 'A complete e-commerce platform with cart and checkout built with React, MongoDB, Express & Node.',
     live: 'https://eccomercewebsite123.netlify.app',
-    github: 'https://github.com/Wright-Moseti200'
+    github: 'https://github.com/Wright-Moseti200/Eccomerce.git'
   },
   {
     title: 'Hotel booking website',
     image: Hotelpic,
     desc: 'A full-featured hotel reservation system allowing users to find and book rooms easily.',
     live: 'https://hotelbookingwebiste.netlify.app',
-    github: 'https://github.com/Wright-Moseti200'
+    github: 'https://github.com/Wright-Moseti200/Hotel-booking.git'
   },
   {
     title: 'Food ordering website',
     image: foodpic,
     desc: 'An intuitive food delivery application crafted with the MERN stack for seamless orders.',
     live: 'https://mellifluous-stroopwafel-8ab97d.netlify.app',
-    github: 'https://github.com/Wright-Moseti200'
+    github: 'https://github.com/Wright-Moseti200/Food-delivery-site.git'
   },
   {
     title: 'Job portal website',
     image: JobPic,
     desc: 'A dynamic job board designed to connect applicants with opportunities using React and Node.',
     live: 'https://jobportalsite123.netlify.app',
-    github: 'https://github.com/Wright-Moseti200'
+    github: 'https://github.com/Wright-Moseti200/Job-Portal-Managemant.git'
   },
   {
     title: 'Ai terminal chatbot',
@@ -51,21 +51,21 @@ const projectList = [
     image: netflix,
     desc: 'A frontend clone of Netflix using React and Firebase, fetching movies via the TMDB API.',
     live: 'https://breakernefliux.netlify.app',
-    github: 'https://github.com/Wright-Moseti200'
+    github: 'https://github.com/Wright-Moseti200/Netflix_clone.git'
   },
   {
     title: 'Spotify clone',
     image: spotify,
     desc: 'A beautiful Spotify web player interface clone constructed with pure JavaScript and React.',
     live: 'https://spotifyclone12000.netlify.app',
-    github: 'https://github.com/Wright-Moseti200'
+    github: 'https://github.com/Wright-Moseti200/Spotifyclone.git'
   },
   {
     title: 'Landing page',
     image: landing,
     desc: 'A responsive and elegant promotional landing page using modern web development practices.',
     live: 'https://educationalsite2.netlify.app',
-    github: 'https://github.com/Wright-Moseti200'
+    github: 'https://github.com/Wright-Moseti200/Educationalsite.git'
   }
 ];
 
