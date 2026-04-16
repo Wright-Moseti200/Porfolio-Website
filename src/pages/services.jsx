@@ -7,7 +7,7 @@ const Services = () => {
     {
       title:"2026",
       content:(
-        <div className='border p-3 md:p-5 border-black rounded-sm'>
+        <div className='border p-3 md:p-5 border-black rounded-sm' data-aos="fade-up" data-aos-duration="1000">
           <div className=' flex flex-col md:flex-row md:justify-between gap-2 md:gap-0'>
             <div>
               <h1 className='text-lg md:text-xl font-bold'>IT attache</h1>
@@ -30,18 +30,16 @@ const Services = () => {
   ];
 
   useEffect(() => {
-            AOS.init({
-                duration: 2000, // Animation duration in milliseconds
-                once: true, // Whether animation should happen only once
-            });
-        }, []);
+    AOS.init({
+        duration: 2000, // Animation duration in milliseconds
+        once: false, // Whether animation should happen only once
+    });
+  }, []);
+
   return (
     <>
-      <div className='mt-14 px-4 lg:px-0 ' id='work' data-aos="fade-down"
-    data-aos-once="false" 
-    data-aos-mirror="true"
-    data-aos-duration="1200">
-        <h1  className='text-center text-4xl lg:text-5xl font-semibold'>Work experience</h1>
+      <div className='mt-14 px-4 lg:px-0' id='work'>
+        <h1 className='text-center text-4xl lg:text-5xl font-semibold' data-aos="fade-down">Work experience</h1>
          <Timeline data={data} />
       </div>
     </>

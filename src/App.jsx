@@ -4,6 +4,7 @@ import Hero from './pages/hero'
 import Aboutme from './pages/aboutme'
 import Services from './pages/services'
 import Projects from './pages/projects'
+import Certification from './pages/Certification'
 import Contact from './pages/Contact'
 import Footer from './pages/Footer'
 import { Providers } from './pages/Providers'
@@ -54,6 +55,7 @@ const App = () => {
             <Aboutme/>
             <Services/>
             <Projects/>
+            <Certification/>
             <Contact/>
             <Footer/>
           </div>

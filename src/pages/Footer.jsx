@@ -8,7 +8,7 @@ const Footer = () => {
 
         {/* Brand Section */}
         <div className="flex flex-col items-center lg:items-start">
-          <h1 className='font-bold text-3xl'>Wright</h1>
+          <h1 className='font-bold text-3xl'>Wright Gichana</h1>
           <p className="text-sm text-gray-400 mt-2">© {date.getFullYear()} All rights reserved.</p>
         </div>
 
