@@ -2,7 +2,7 @@
 // Change this one value (or set the SITE_URL env var at build time) and the
 // canonical link, Open Graph tags, JSON-LD, robots.txt and sitemap.xml all
 // follow automatically.
-export const SITE_URL = (process.env.SITE_URL || 'https://wrightgichana.netlify.app').replace(
+export const SITE_URL = (process.env.SITE_URL || 'https://portfolio123web.netlify.app').replace(
   /\/+$/,
   '',
 );

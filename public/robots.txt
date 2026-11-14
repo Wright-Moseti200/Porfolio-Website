@@ -1,4 +1,4 @@
-# https://wrightgichana.netlify.app/robots.txt
+# https://portfolio123web.netlify.app/robots.txt
 User-agent: *
 Allow: /
 
@@ -18,4 +18,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://wrightgichana.netlify.app/sitemap.xml
+Sitemap: https://portfolio123web.netlify.app/sitemap.xml

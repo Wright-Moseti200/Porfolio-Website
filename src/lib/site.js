@@ -22,7 +22,7 @@ export const profile = {
   phone: '0714471627',
   phoneDisplay: '0714 471 627',
   phoneHref: '+254714471627',
-  site: 'https://wrightgichana.netlify.app',
+  site: 'https://portfolio123web.netlify.app',
 };
 
 export const navLinks = [
