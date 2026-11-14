@@ -24,7 +24,7 @@ exists — that happens once, in Search Console.
 Edit `site.config.mjs`:
 
 ```js
-export const SITE_URL = 'https://portfolio123web.netlify.app';
+export const SITE_URL = 'https://wrightgichana.netlify.app';
 ```
 
 That single value is injected into the canonical link, Open Graph tags, JSON-LD,
@@ -39,9 +39,9 @@ npm run build     # regenerates robots.txt + sitemap.xml, then builds
 
 Deploy the `dist/` folder. Confirm these return 200 in a browser:
 
-- `https://portfolio123web.netlify.app/`
-- `https://portfolio123web.netlify.app/robots.txt`
-- `https://portfolio123web.netlify.app/sitemap.xml`
+- `https://wrightgichana.netlify.app/`
+- `https://wrightgichana.netlify.app/robots.txt`
+- `https://wrightgichana.netlify.app/sitemap.xml`
 
 ## Step 3 — verify the site in Google Search Console
 
@@ -67,7 +67,7 @@ DNS verification also works if you prefer not to rebuild.
 In Search Console → **Indexing → Sitemaps**, submit:
 
 ```
-https://portfolio123web.netlify.app/sitemap.xml
+https://wrightgichana.netlify.app/sitemap.xml
 ```
 
 Then use **URL Inspection → Request indexing** on the homepage. First
