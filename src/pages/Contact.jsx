@@ -1,72 +1,197 @@
-import React, { useState, useEffect } from 'react'
-import "../App.css"
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { toast } from "sonner"
+import { useState } from 'react';
+import { ArrowUpRight, Check, Mail, Phone } from 'lucide-react';
+import { toast } from 'sonner';
+import { profile } from '../lib/site';
+import { Reveal, SplitHeading, WordsReveal } from '../components/motion/Reveal';
 
-const Contact = () => {
-  const [result, setResult] = useState("");
+export default function Contact() {
+  const [status, setStatus] = useState('idle');
+  const [error, setError] = useState('');
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    setResult("Sending....");
-    const formData = new FormData(event.target);
+    setStatus('sending');
+    setError('');
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    formData.append('access_key', '47bd7ea9-4143-497b-86c1-a3b133f7f8fc');
 
-    formData.append("access_key", "47bd7ea9-4143-497b-86c1-a3b133f7f8fc");
-
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: formData
-    });
-
-    const data = await response.json();
-
-    if (data.success) {
-      toast("Message has been sent successfully", {
-        description: "Thank you for reaching out! I will get back to you as soon as possible.",
-        action: {
-          label: "Close",
-          onClick: () => console.log("Closed"),
-        },
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
       });
-      event.target.reset();
-      setResult("");
-    } else {
-      console.log("Error", data);
-      toast("Failed to send message", {
-        description: data.message || "An error occurred while sending your message.",
+      const data = await response.json();
+
+      if (data.success) {
+        toast('Message sent successfully', {
+          description:
+            'Thank you for reaching out! I will get back to you as soon as possible.',
+          action: { label: 'Close', onClick: () => {} },
+        });
+        form.reset();
+        setStatus('sent');
+        window.setTimeout(() => setStatus('idle'), 4000);
+      } else {
+        setError(data.message || 'Something went wrong. Please try again.');
+        toast('Failed to send message', {
+          description: data.message || 'An error occurred while sending your message.',
+        });
+        setStatus('idle');
+      }
+    } catch {
+      setError('Network error. Please try again in a moment.');
+      toast('Failed to send message', {
+        description: 'Please check your connection and try again.',
       });
-      setResult("");
+      setStatus('idle');
     }
   };
 
-  useEffect(() => {
-    AOS.init({
-      duration: 2000, // Animation duration in milliseconds
-      once: false, // Whether animation should happen only once
-    });
-  }, []);
-
   return (
-    <>
-      <div className='mt-14 px-4 lg:px-0 contact' id='contact'>
-        <h1 className='text-center font-semibold text-4xl lg:text-5xl' data-aos="fade-down">Get in touch</h1>
-        <form onSubmit={onSubmit} data-aos="fade-up" data-aos-duration="1000">
-          <div className='flex flex-col w-full justify-center items-center mt-10'>
-            <div className='flex flex-col lg:flex-row gap-4 lg:gap-10 w-full lg:w-auto'>
-              <input placeholder='Enter your name' name="name" className='border p-3 w-full lg:w-96 rounded-sm outline-none border-black' required />
-              <input placeholder='Enter your email' name="email" type="email" className='border p-3 w-full lg:w-96 rounded-sm outline-none border-black' required />
-            </div>
-            <textarea className='mt-5 lg:mt-10 border p-5 rounded-sm w-full lg:w-[800px] h-60 lg:h-80 outline-none border-black resize-none' placeholder='Enter your message' name='message' required>
-            </textarea>
-            <button type='submit' className='mt-10 border p-4 pr-7 pl-7 rounded-full border-black w-full lg:w-auto bg-white hover:bg-black hover:text-white transition-colors duration-300'>
-              {result === "Sending...." ? "Sending...." : "Submit now"}
-            </button>
-          </div>
-        </form>
-      </div>
-    </>
-  )
-}
+    <section className="section-pad pb-[clamp(1rem,3vw,2rem)]" id="contact">
+      <Reveal amount={0.12}>
+        <div className="contact-panel">
+          <div
+            className="blob"
+            style={{ width: 340, height: 340, background: '#b3a1ff', top: -110, left: -80 }}
+          />
+          <div
+            className="blob"
+            style={{
+              width: 420,
+              height: 420,
+              background: '#a9c6ff',
+              bottom: -160,
+              right: -110,
+              animationDelay: '-6s',
+            }}
+          />
+          <div
+            className="blob"
+            style={{
+              width: 230,
+              height: 230,
+              background: '#f0c6ff',
+              top: '34%',
+              right: '22%',
+              animationDelay: '-3s',
+              opacity: 0.45,
+            }}
+          />
 
-export default Contact
+          <div className="relative z-10 mx-auto max-w-[44rem] text-center">
+            <span className="eyebrow !text-[#4b4577]">
+              <span className="h-1 w-1 rounded-full bg-[#4b4577]" />
+              Contact
+            </span>
+
+            <SplitHeading
+              as="h2"
+              inView
+              className="display mt-4 text-[clamp(2.05rem,4.7vw,3.6rem)] text-[#221d3d]"
+              lines={[
+                { text: 'Contact with me to' },
+                { text: 'sizzle your project', color: '#6f68a3' },
+              ]}
+            />
+
+            <WordsReveal
+              className="mx-auto mt-4 max-w-[31rem] text-[0.95rem] leading-relaxed text-[#4c4777]"
+              text="Feel free to contact me if you have any questions. I'm available for new projects or just for chatting."
+              stagger={0.016}
+              delay={0.06}
+            />
+
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
+              <a href={`mailto:${profile.email}`} className="contact-chip">
+                <Mail size={14} strokeWidth={1.9} />
+                {profile.email}
+              </a>
+              <a href={`tel:${profile.phoneHref}`} className="contact-chip">
+                <Phone size={14} strokeWidth={1.9} />
+                {profile.phoneDisplay}
+              </a>
+            </div>
+
+            <form onSubmit={onSubmit} className="mt-7 text-left">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="name" className="sr-only">
+                    Your name
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                    placeholder="Your name"
+                    className="contact-field"
+                    autoComplete="name"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="sr-only">
+                    Your email
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="Your email"
+                    className="contact-field"
+                    autoComplete="email"
+                  />
+                </div>
+              </div>
+
+              <label htmlFor="message" className="sr-only">
+                Work description
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                required
+                rows={4}
+                placeholder="Tell me about your project"
+                className="contact-field mt-3 resize-none"
+              />
+
+              <button
+                type="submit"
+                disabled={status === 'sending'}
+                className="btn-dark mt-3 w-full !py-3 disabled:cursor-wait disabled:opacity-70"
+              >
+                {status === 'sending' ? 'Sending…' : status === 'sent' ? 'Sent!' : 'Submit'}
+                {status === 'sent' ? (
+                  <Check size={15} />
+                ) : (
+                  <ArrowUpRight size={15} className="opacity-80" />
+                )}
+              </button>
+
+              {error && (
+                <p className="mt-2 text-center text-[0.7rem] font-medium text-[#7c2340]">
+                  {error}
+                </p>
+              )}
+            </form>
+
+            <p className="mt-5 text-center text-[0.78rem] text-[#4c4777]/80">
+              Usually replies within 24 hours ·{' '}
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="font-semibold underline decoration-[#4c4777]/30 underline-offset-4 transition-colors hover:text-[#221d3d]"
+              >
+                Connect on LinkedIn
+              </a>
+            </p>
+          </div>
+        </div>
+      </Reveal>
+    </section>
+  );
+}

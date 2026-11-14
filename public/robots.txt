@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# AI crawlers are welcome — a plain-language summary lives at /llm.txt
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://wrightgichana.netlify.app/sitemap.xml

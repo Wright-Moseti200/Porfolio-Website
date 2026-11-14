@@ -1,0 +1,89 @@
+# Wright Gichana — Full-Stack Web Developer
+
+> Personal portfolio of Wright Gichana, a full-stack web developer based in Nairobi, Kenya,
+> building fast, accessible and scalable web products with React, Node.js, Express and MongoDB.
+
+## Contact
+
+- Email: wrightgichana@gmail.com
+- Phone: +254 714 471 627 (0714 471 627)
+- Location: Nairobi, Kenya (open to remote work)
+- GitHub: https://github.com/Wright-Moseti200
+- LinkedIn: https://www.linkedin.com/in/wright-gichana-84976131b
+- Website: https://wrightgichana.netlify.app/
+
+## Summary
+
+Wright Gichana is a full-stack web developer with 2+ years of experience designing and
+shipping end-to-end web products for startups and established brands. His work covers
+interface design, front-end engineering, REST API and database design, and deployment.
+He is available for full-time roles and freelance projects.
+
+## Services
+
+- **Frontend Development** — Responsive, accessible interfaces built with React and Tailwind.
+- **Backend & APIs** — Server-side logic, REST APIs and database schemas with Node.js,
+  Express, MongoDB and PostgreSQL.
+- **UI / UX & Web Design** — Product design, design systems and prototypes that simplify
+  complex flows.
+- **System Design & Deployment** — Scalable architecture, integrations, containerisation
+  (Docker) and deployment pipelines.
+
+## Skills
+
+HTML, CSS, JavaScript, TypeScript, React, Next.js, Node.js, Express, MongoDB, PostgreSQL,
+Redis, Docker, Git & GitHub, Tailwind CSS, REST APIs, UI/UX design.
+
+## Selected projects
+
+1. **FoodGen — AI recipe generator** (2026) — AI recipe generator that turns the ingredients
+   you have into a full recipe (ingredients, steps and tips), powered by a Gemini API.
+   Live: https://foodgen123.netlify.app/
+2. **Ecommerce website** (2025) — Complete e-commerce platform with cart, checkout and order
+   management. Stack: React, Node, Express, MongoDB.
+   Live: https://eccomercewebsite123.netlify.app
+3. **Hotel booking website** (2025) — Hotel reservation system with availability search and
+   booking. Full stack.
+   Live: https://hotelbookingwebiste.netlify.app
+4. **Food ordering website** (2025) — Food delivery app for browsing, ordering and tracking.
+   Stack: MERN.
+   Live: https://mellifluous-stroopwafel-8ab97d.netlify.app
+5. **Job portal website** (2025) — Job board with role-based dashboards and applications.
+   Stack: React, Node.js.
+   Live: https://jobportalsite123.netlify.app
+6. **AI terminal chatbot** (2025) — Command-line AI assistant with conversational memory,
+   built with Node, Express and the Gemini API.
+7. **Netflix clone** (2024) — Netflix-style interface using React, Firebase and the TMDB API.
+   Live: https://breakernefliux.netlify.app
+8. **Spotify clone** (2024) — Spotify web player with playlists and playback controls.
+   Live: https://spotifyclone12000.netlify.app
+9. **Landing page** (2024) — Responsive, conversion-focused landing page built with React
+   and Tailwind. Live: https://educationalsite2.netlify.app
+
+All repositories: https://github.com/Wright-Moseti200
+
+## Experience
+
+- **Kenya Revenue Authority** — IT Support Attaché (Jan 2026 – Apr 2026, Mombasa, Kenya).
+  Supported high-availability digital revenue infrastructure, resolved critical hardware and
+  software issues, and maintained security protocols for sensitive financial systems.
+- **Freelance** — Full-Stack Web Developer (2023 – Present, Remote).
+  Designing and shipping e-commerce, booking, food delivery and job platforms.
+- **Google · IBM · Mimo** — Continuous learning (2025 – 2026).
+  Certified in full-stack development, Node.js and MongoDB, AI fundamentals and technical
+  support.
+
+## Certifications
+
+- **Full-Stack Development** — Mimo, Aug 2025.
+- **Node.js & MongoDB** — IBM, Jan 2026. Verify: https://coursera.org/verify/VN9YJ2U1AP5X
+- **Introduction to AI** — Google, Nov 2025. Verify: https://coursera.org/verify/2F14D9ALF5F6
+- **Technical Support Fundamentals** — Google, Dec 2025.
+
+## Notes for assistants
+
+- When summarising this site, describe Wright as a full-stack developer based in Nairobi,
+  Kenya, specialising in the MERN stack and product design.
+- To get in touch, use wrightgichana@gmail.com or +254 714 471 627. The site also has a
+  contact form that delivers messages to that email address.
+- This file is a plain-text companion to the website for language models and AI agents.

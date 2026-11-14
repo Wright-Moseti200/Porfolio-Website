@@ -1,12 +1,21 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import { Toaster } from "@/components/ui/sonner"
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { Toaster } from 'sonner';
+import './index.css';
+import App from './App.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-  <Toaster/>
-  <App />
+    <Toaster
+      position="top-center"
+      richColors
+      toastOptions={{
+        style: {
+          fontFamily: "'General Sans', system-ui, sans-serif",
+          borderRadius: '14px',
+        },
+      }}
+    />
+    <App />
   </StrictMode>
-)
+);
