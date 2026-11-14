@@ -1,1 +1,3 @@
-/* /index.html 200
+# The site is a single page with in-page anchors, so no SPA catch-all redirect
+# is needed. Removing it lets Netlify serve public/404.html (with a real 404
+# status) for unknown paths, which is better for SEO.

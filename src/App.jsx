@@ -9,8 +9,27 @@ import Contact from './pages/Contact';
 import Footer from './pages/Footer';
 import SmoothScroll from './components/SmoothScroll';
 import ScrollProgress from './components/ScrollProgress';
+import NotFound from './pages/NotFound';
+
+// The site is a single page with in-page anchors, so any path other than "/"
+// does not exist. Netlify serves public/404.html for these in production; this
+// check covers local dev/preview and any other static host.
+function isKnownPath() {
+  const path = window.location.pathname
+    .replace(/\/index\.html?$/i, '')
+    .replace(/\/+$/, '');
+  return path === '';
+}
 
 const App = () => {
+  if (!isKnownPath()) {
+    return (
+      <MotionConfig reducedMotion="user">
+        <NotFound />
+      </MotionConfig>
+    );
+  }
+
   return (
     <MotionConfig reducedMotion="user">
       <SmoothScroll />
