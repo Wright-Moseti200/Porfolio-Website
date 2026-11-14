@@ -4,10 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/generate-seo.mjs",
     "dev": "vite",
+    "prebuild": "node scripts/generate-seo.mjs",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "seo": "node scripts/generate-seo.mjs"
   },
   "dependencies": {
     "@heroui/react": "^3.2.7",
