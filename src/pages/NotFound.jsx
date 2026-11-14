@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 import { motion as Motion } from 'framer-motion';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
-import { navLinks } from '../lib/site';
 
-const quickLinks = navLinks.filter((link) =>
-  ['#about', '#services', '#contact'].includes(link.href),
-);
+const quickLinks = [
+  { label: 'About', href: '#about' },
+  { label: 'Services', href: '#services' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Contact', href: '#contact' },
+];
 
 export default function NotFound() {
   useEffect(() => {
