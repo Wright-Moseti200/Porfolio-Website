@@ -18,6 +18,7 @@ exists — that happens once, in Search Console.
 | Fast LCP (eager, high-priority portrait), lazy images | `src/pages/hero.jsx`, project cards |
 | Mobile-friendly, no horizontal overflow | verified at 375 px |
 | `llm.txt` summary for AI crawlers | `public/llm.txt` |
+| Branded 404 page with `noindex` | `public/404.html` (served by Netlify for unknown paths) |
 
 ## Step 1 — set the real domain
 

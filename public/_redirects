@@ -1,3 +1,4 @@
-# The site is a single page with in-page anchors, so no SPA catch-all redirect
-# is needed. Removing it lets Netlify serve public/404.html (with a real 404
-# status) for unknown paths, which is better for SEO.
+# The site is a single page with in-page anchors, so there is no SPA catch-all.
+# Unknown paths fall through to the branded 404 page with a real 404 status,
+# which is what search engines expect. Existing files are still served first.
+/*  /404.html  404
