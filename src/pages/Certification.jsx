@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import { certifications } from '../lib/site';
-import { Converge, Reveal, SplitHeading, WordsReveal } from '../components/motion/Reveal';
+import { Reveal, SplitHeading, WordsReveal } from '../components/motion/Reveal';
 
 export default function Certification() {
   return (
@@ -32,12 +32,17 @@ export default function Certification() {
       </div>
 
       <div className="cert-grid">
-        {certifications.map((cert, index) => (
-          <Converge
-            key={cert.title}
-            delay={0.1 + index * 0.09}
-            className="h-full"
-          >
+        {certifications.map((cert, index) => {
+          const direction = ['up', 'left', 'right', 'zoom', 'left'][index % 5];
+
+          return (
+            <Reveal
+              key={cert.title}
+              className="h-full"
+              direction={direction}
+              delay={0.06 + (index % 3) * 0.08}
+              distance={direction === 'up' || direction === 'zoom' ? 40 : 56}
+            >
             <a
               href={cert.link}
               target="_blank"
@@ -72,8 +77,9 @@ export default function Certification() {
                 </span>
               </div>
             </a>
-          </Converge>
-        ))}
+            </Reveal>
+          );
+        })}
       </div>
     </section>
   );

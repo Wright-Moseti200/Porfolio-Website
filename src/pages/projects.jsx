@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import { projects, profile } from '../lib/site';
-import { Converge, Reveal, SplitHeading, WordsReveal } from '../components/motion/Reveal';
+import { Reveal, SplitHeading, WordsReveal } from '../components/motion/Reveal';
 
 function WorkCard({ project, className, mediaClass }) {
   const href = project.live || project.github;
@@ -89,15 +89,19 @@ export default function Projects() {
               : index === 1
                 ? { className: 'work-card--side', media: 'work-media--featured' }
                 : { className: 'work-card--third', media: 'work-media--third' };
+          const direction = ['up', 'right', 'left', 'up', 'right', 'left', 'up'][index % 7];
+          const columnDelay = (index % 3) * 0.08;
 
           return (
-            <Converge
+            <Reveal
               key={project.title}
-              delay={0.08 + index * 0.055}
               className={`${layout.className} h-full`}
+              direction={direction}
+              delay={0.06 + columnDelay}
+              distance={direction === 'up' ? 40 : 56}
             >
               <WorkCard project={project} className="h-full" mediaClass={layout.media} />
-            </Converge>
+            </Reveal>
           );
         })}
       </div>

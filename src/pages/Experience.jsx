@@ -1,12 +1,12 @@
 import { ArrowUpRight, MapPin } from 'lucide-react';
 import { experience } from '../lib/site';
-import { Converge, SplitHeading } from '../components/motion/Reveal';
+import { Reveal, SplitHeading } from '../components/motion/Reveal';
 
 export default function Experience() {
   return (
     <section className="section-y section-pad" id="experience">
       <div className="exp-grid">
-        <Converge className="h-full">
+        <Reveal className="h-full" direction="left" distance={64} delay={0.06}>
           <div className="exp-card card h-full">
             <div>
               <span className="eyebrow">
@@ -25,13 +25,15 @@ export default function Experience() {
               <ArrowUpRight size={14} />
             </a>
           </div>
-        </Converge>
+        </Reveal>
 
         {experience.map((item, index) => (
-          <Converge
+          <Reveal
             key={`${item.company}-${item.role}`}
-            delay={0.1 + index * 0.09}
             className="h-full"
+            direction={index % 2 === 0 ? 'up' : 'right'}
+            delay={0.06 + (index % 2) * 0.09}
+            distance={44}
           >
             <div className="exp-card card h-full">
               <div className="flex items-start justify-between gap-3">
@@ -60,7 +62,7 @@ export default function Experience() {
                 {item.location}
               </div>
             </div>
-          </Converge>
+          </Reveal>
         ))}
       </div>
     </section>

@@ -1,7 +1,7 @@
 import { Code2, Layers3, PenTool, Server, ArrowUpRight } from 'lucide-react';
 import { skills, services } from '../lib/site';
 import Marquee from '../components/Marquee';
-import { Converge, Reveal, SplitHeading, WordsReveal } from '../components/motion/Reveal';
+import { Reveal, SplitHeading, WordsReveal } from '../components/motion/Reveal';
 
 const icons = {
   code: Code2,
@@ -76,11 +76,15 @@ export function Services() {
         <div className="service-cards">
           {services.map((service, index) => {
             const Icon = icons[service.icon] || Code2;
+            const direction = ['left', 'up', 'right', 'zoom'][index % 4];
+
             return (
-              <Converge
+              <Reveal
                 key={service.title}
-                delay={0.1 + index * 0.09}
                 className="h-full"
+                direction={direction}
+                delay={0.06 + (index % 2) * 0.09}
+                distance={direction === 'left' || direction === 'right' ? 52 : 38}
               >
                 <div className="service-card card h-full">
                   <div className="flex items-start justify-between">
@@ -106,7 +110,7 @@ export function Services() {
                     </p>
                   </div>
                 </div>
-              </Converge>
+              </Reveal>
             );
           })}
         </div>

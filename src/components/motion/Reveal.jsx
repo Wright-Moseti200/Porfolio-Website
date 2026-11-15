@@ -1,101 +1,215 @@
-import { motion as Motion, useMotionValue, useSpring } from 'framer-motion';
-import { useRef } from 'react';
+import { motion as Motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
+import { createContext, useContext, useRef } from 'react';
 
-const EASE = [0.32, 0.02, 0.15, 1];
+// A long, weighted ease-out. Slow enough to read as "premium", quick enough
+// that a card still settles before the next one starts moving.
+const EASE = [0.22, 1, 0.36, 1];
 
 /* ------------------------------------------------------------------
-   Scroll reveal — subtle rise + de-blur, adapted from React Bits'
-   Animated Content / Blur Text patterns.
+   Shared reveal engine.
+
+   Every reveal now replays in BOTH scroll directions: elements fade and
+   drift out when they leave the viewport, then animate back in when they
+   re-enter. The hidden state is deliberately directional so exits read as
+   the reverse of the entrance instead of a flat fade.
 ------------------------------------------------------------------ */
+const directionOffset = {
+  up: (d) => ({ x: 0, y: d }),
+  down: (d) => ({ x: 0, y: -d }),
+  left: (d) => ({ x: -d, y: 0 }),
+  right: (d) => ({ x: d, y: 0 }),
+  zoom: () => ({ x: 0, y: 0 }),
+  fade: () => ({ x: 0, y: 0 }),
+};
+
+function revealVariants({
+  direction = 'up',
+  distance = 34,
+  blur = 8,
+  scale = 0.985,
+  rotate = 0,
+  duration = 1.05,
+  delay = 0,
+  exitDuration = 0.5,
+} = {}) {
+  const zoom = direction === 'zoom';
+  const fade = direction === 'fade';
+  const from = (directionOffset[direction] || directionOffset.up)(distance);
+  const fromScale = zoom ? 0.9 : fade ? 1 : scale;
+  const fromBlur = fade ? 0 : Math.max(zoom ? 10 : 0, blur);
+
+  return {
+    hidden: {
+      opacity: 0,
+      ...from,
+      scale: fromScale,
+      rotate,
+      filter: `blur(${fromBlur}px)`,
+      transition: { duration: exitDuration, ease: EASE },
+    },
+    show: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      scale: 1,
+      rotate: 0,
+      filter: 'blur(0px)',
+      transition: { duration, delay, ease: EASE },
+    },
+  };
+}
+
+const VIEWPORT = { once: false, amount: 0.18, margin: '0px 0px -8% 0px' };
+
 export function Reveal({
   children,
   className = '',
   delay = 0,
-  y = 28,
-  blur = true,
-  amount = 0.16,
-  once = true,
+  y = 30,
+  blur = 8,
+  direction = 'up',
+  distance,
+  scale = 0.985,
+  rotate = 0,
+  amount = VIEWPORT.amount,
+  once = VIEWPORT.once,
+  margin = VIEWPORT.margin,
+  duration = 1.05,
 }) {
+  const reduced = useReducedMotion();
+
   return (
     <Motion.div
       className={className}
-      initial={{ opacity: 0, y, filter: blur ? 'blur(9px)' : 'blur(0px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      viewport={{ once, amount, margin: '0px 0px -40px 0px' }}
-      transition={{ duration: 1.3, delay, ease: EASE }}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once, amount, margin }}
+      variants={revealVariants({
+        direction,
+        distance: distance ?? (direction === 'up' || direction === 'down' ? y : 46),
+        blur: reduced ? 0 : blur,
+        scale: reduced ? 1 : scale,
+        rotate,
+        duration,
+        delay,
+      })}
     >
       {children}
     </Motion.div>
   );
 }
 
-const staggerParent = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
-  },
-};
+/* ------------------------------------------------------------------
+   Stagger — one observer, many cards.
 
-const staggerChild = {
-  hidden: { opacity: 0, y: 24, filter: 'blur(8px)' },
-  show: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: { duration: 1.25, ease: EASE },
-  },
-};
+   The first visible card waits `delay` seconds, then each following card
+   inherits a fixed step (`stagger`). Cards can share a direction or rotate
+   through a set of variants (`variants={['up', 'left', 'right', 'zoom']}`)
+   so a grid feels composed instead of mechanical.
+------------------------------------------------------------------ */
+const StaggerContext = createContext({ variantNames: ['up'], reduced: false });
 
 export function Stagger({
   children,
   className = '',
   amount = 0.15,
-  once = true,
-  delay = 0,
+  once = false,
+  delay = 0.12,
+  stagger = 0.1,
+  variants: variantNames = ['up'],
+  margin = VIEWPORT.margin,
 }) {
+  const reduced = useReducedMotion();
+  const parent = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: reduced ? 0 : stagger,
+        delayChildren: reduced ? 0 : delay,
+      },
+    },
+  };
+
+  return (
+    <StaggerContext.Provider value={{ variantNames, reduced }}>
+      <Motion.div
+        className={className}
+        variants={parent}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once, amount, margin }}
+      >
+        {children}
+      </Motion.div>
+    </StaggerContext.Provider>
+  );
+}
+
+export function StaggerItem({
+  children,
+  className = '',
+  index = 0,
+  variant,
+  distance,
+  blur = 8,
+  scale = 0.985,
+  rotate,
+  duration = 1.05,
+  ...props
+}) {
+  const { variantNames, reduced } = useContext(StaggerContext);
+  const name = variant || variantNames[index % variantNames.length];
+  const tilt =
+    rotate ?? (name === 'left' ? -1.1 : name === 'right' ? 1.1 : name === 'zoom' ? 0 : 0);
+  const spread =
+    distance ?? (name === 'left' || name === 'right' ? 52 : name === 'zoom' ? 0 : 34);
+
   return (
     <Motion.div
       className={className}
-      variants={staggerParent}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once, amount }}
-      transition={{ delayChildren: delay }}
+      variants={revealVariants({
+        direction: name,
+        distance: spread,
+        blur: reduced ? 0 : blur,
+        scale: reduced ? 1 : scale,
+        rotate: reduced ? 0 : tilt,
+        duration,
+      })}
+      {...props}
     >
       {children}
     </Motion.div>
   );
 }
 
-export function StaggerItem({ children, className = '', ...props }) {
-  return (
-    <Motion.div variants={staggerChild} className={className} {...props}>
-      {children}
-    </Motion.div>
-  );
-}
-
 /* ------------------------------------------------------------------
-   Converge — every card glides in from the left and settles into its
-   final spot. One consistent direction, slow weighted easing, and a
-   small per-item delay.
+   Converge — a single panel that glides in from the side and settles.
 ------------------------------------------------------------------ */
 export function Converge({
   children,
   className = '',
   x = -88,
   delay = 0,
-  duration = 1.45,
-  amount = 0.1,
-  once = true,
+  duration = 1.2,
+  amount = 0.12,
+  once = false,
 }) {
+  const reduced = useReducedMotion();
+
   return (
     <Motion.div
       className={className}
-      initial={{ opacity: 0, x, scale: 0.98 }}
-      whileInView={{ opacity: 1, x: 0, scale: 1 }}
-      viewport={{ once, amount, margin: '0px 0px -60px 0px' }}
-      transition={{ duration, delay, ease: EASE }}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once, amount, margin: VIEWPORT.margin }}
+      variants={revealVariants({
+        direction: x < 0 ? 'left' : 'right',
+        distance: Math.abs(x) || 0,
+        blur: reduced ? 0 : 6,
+        scale: reduced ? 1 : 0.98,
+        duration,
+        delay,
+      })}
     >
       {children}
     </Motion.div>
@@ -115,7 +229,7 @@ export function SplitHeading({
   ariaLabel,
   as = 'h1',
   inView = false,
-  once = true,
+  once = false,
   delay = 0.14,
 }) {
   const Tag = as;
@@ -184,7 +298,7 @@ export function WordsReveal({
   stagger = 0.022,
   duration = 0.9,
   amount = 0.35,
-  once = true,
+  once = false,
 }) {
   const Tag = as;
   const words = String(text).split(/\s+/).filter(Boolean);
