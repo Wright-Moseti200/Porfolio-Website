@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ArrowUpRight, Check, Mail, Phone } from 'lucide-react';
 import { toast } from 'sonner';
 import { profile } from '../lib/site';
-import { Reveal, SplitHeading, WordsReveal } from '../components/motion/Reveal';
+import { Reveal, SplitHeading, Stagger, StaggerItem, WordsReveal } from '../components/motion/Reveal';
 
 export default function Contact() {
   const [status, setStatus] = useState('idle');
@@ -50,7 +50,7 @@ export default function Contact() {
 
   return (
     <section className="section-pad pb-[clamp(1rem,3vw,2rem)]" id="contact">
-      <Reveal amount={0.12}>
+      <Reveal amount={0.12} animation="fade-zoom-in">
         <div className="contact-panel">
           <div
             className="blob"
@@ -103,20 +103,33 @@ export default function Contact() {
               delay={0.06}
             />
 
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
-              <a href={`mailto:${profile.email}`} className="contact-chip">
-                <Mail size={14} strokeWidth={1.9} />
-                {profile.email}
-              </a>
-              <a href={`tel:${profile.phoneHref}`} className="contact-chip">
-                <Phone size={14} strokeWidth={1.9} />
-                {profile.phoneDisplay}
-              </a>
-            </div>
+            <Stagger
+              className="mt-6 flex flex-wrap items-center justify-center gap-2.5"
+              variants={['fade-up', 'fade-left']}
+              amount={0.3}
+            >
+              <StaggerItem index={0}>
+                <a href={`mailto:${profile.email}`} className="contact-chip">
+                  <Mail size={14} strokeWidth={1.9} />
+                  {profile.email}
+                </a>
+              </StaggerItem>
+              <StaggerItem index={1}>
+                <a href={`tel:${profile.phoneHref}`} className="contact-chip">
+                  <Phone size={14} strokeWidth={1.9} />
+                  {profile.phoneDisplay}
+                </a>
+              </StaggerItem>
+            </Stagger>
 
             <form onSubmit={onSubmit} className="mt-7 text-left">
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <div>
+              <Stagger
+                className="grid grid-cols-1 gap-3 sm:grid-cols-2"
+                variants={['fade-up', 'fade-up-right']}
+                amount={0.25}
+                delay={0.08}
+              >
+                <StaggerItem index={0}>
                   <label htmlFor="name" className="sr-only">
                     Your name
                   </label>
@@ -129,8 +142,8 @@ export default function Contact() {
                     className="contact-field"
                     autoComplete="name"
                   />
-                </div>
-                <div>
+                </StaggerItem>
+                <StaggerItem index={1}>
                   <label htmlFor="email" className="sr-only">
                     Your email
                   </label>
@@ -143,52 +156,60 @@ export default function Contact() {
                     className="contact-field"
                     autoComplete="email"
                   />
-                </div>
-              </div>
+                </StaggerItem>
+              </Stagger>
 
-              <label htmlFor="message" className="sr-only">
-                Work description
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                required
-                rows={4}
-                placeholder="Tell me about your project"
-                className="contact-field mt-3 resize-none"
-              />
+              <Reveal animation="fade-up-left" className="mt-3" amount={0.25}>
+                <label htmlFor="message" className="sr-only">
+                  Work description
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  rows={4}
+                  placeholder="Tell me about your project"
+                  className="contact-field resize-none"
+                />
+              </Reveal>
 
-              <button
-                type="submit"
-                disabled={status === 'sending'}
-                className="btn-dark mt-3 w-full !py-3 disabled:cursor-wait disabled:opacity-70"
-              >
-                {status === 'sending' ? 'Sending…' : status === 'sent' ? 'Sent!' : 'Submit'}
-                {status === 'sent' ? (
-                  <Check size={15} />
-                ) : (
-                  <ArrowUpRight size={15} className="opacity-80" />
-                )}
-              </button>
+              <Reveal animation="fade-zoom-in" className="mt-3" amount={0.25}>
+                <button
+                  type="submit"
+                  disabled={status === 'sending'}
+                  className="btn-dark w-full !py-3 disabled:cursor-wait disabled:opacity-70"
+                >
+                  {status === 'sending' ? 'Sending…' : status === 'sent' ? 'Sent!' : 'Submit'}
+                  {status === 'sent' ? (
+                    <Check size={15} />
+                  ) : (
+                    <ArrowUpRight size={15} className="opacity-80" />
+                  )}
+                </button>
+              </Reveal>
 
               {error && (
-                <p className="mt-2 text-center text-[0.7rem] font-medium text-[#7c2340]">
-                  {error}
-                </p>
+                <Reveal className="mt-2" amount={0.3} animation="fade-up">
+                  <p className="text-center text-[0.7rem] font-medium text-[#7c2340]">
+                    {error}
+                  </p>
+                </Reveal>
               )}
             </form>
 
-            <p className="mt-5 text-center text-[0.78rem] text-[#4c4777]/80">
-              Usually replies within 24 hours ·{' '}
-              <a
-                href={profile.linkedin}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="font-semibold underline decoration-[#4c4777]/30 underline-offset-4 transition-colors hover:text-[#221d3d]"
-              >
-                Connect on LinkedIn
-              </a>
-            </p>
+            <Reveal className="mt-5" animation="fade-up-left" amount={0.3}>
+              <p className="text-center text-[0.78rem] text-[#4c4777]/80">
+                Usually replies within 24 hours ·{' '}
+                <a
+                  href={profile.linkedin}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="font-semibold underline decoration-[#4c4777]/30 underline-offset-4 transition-colors hover:text-[#221d3d]"
+                >
+                  Connect on LinkedIn
+                </a>
+              </p>
+            </Reveal>
           </div>
         </div>
       </Reveal>

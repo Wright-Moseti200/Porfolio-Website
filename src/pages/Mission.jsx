@@ -42,7 +42,7 @@ export function Services() {
     <section className="section-y section-pad" id="services">
       <div className="services-grid">
         <div>
-          <Reveal>
+          <Reveal animation="fade-right">
             <span className="eyebrow">
               <span className="h-1 w-1 rounded-full bg-[var(--teal-deep)]" />
               Services
@@ -57,7 +57,7 @@ export function Services() {
               ]}
             />
           </Reveal>
-          <Reveal delay={0.08}>
+          <Reveal delay={0.08} animation="fade-up">
             <WordsReveal
               className="mt-5 max-w-[19rem] text-[0.95rem] leading-relaxed text-[var(--ink-soft)]"
               text="From the first sketch to production deploy, I cover the whole product — design, build and ship."
@@ -65,7 +65,7 @@ export function Services() {
               delay={0.06}
             />
           </Reveal>
-          <Reveal delay={0.14}>
+          <Reveal delay={0.14} animation="fade-zoom-in">
             <a className="btn-light mt-7" href="#contact">
               Start a project
               <ArrowUpRight size={14} />
@@ -76,15 +76,17 @@ export function Services() {
         <div className="service-cards">
           {services.map((service, index) => {
             const Icon = icons[service.icon] || Code2;
-            const direction = ['left', 'up', 'right', 'zoom'][index % 4];
+            const animation = ['fade-up-right', 'flip-left', 'zoom-in', 'fade-down-left'][
+              index % 4
+            ];
 
             return (
               <Reveal
                 key={service.title}
                 className="h-full"
-                direction={direction}
-                delay={0.06 + (index % 2) * 0.09}
-                distance={direction === 'left' || direction === 'right' ? 52 : 38}
+                animation={animation}
+                delay={0.06 + index * 0.09}
+                duration={animation.startsWith('flip') ? 1.35 : 1.05}
               >
                 <div className="service-card card h-full">
                   <div className="flex items-start justify-between">

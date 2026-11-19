@@ -1,7 +1,7 @@
 import { motion as Motion } from 'framer-motion';
 import { ArrowUp, ArrowUpRight } from 'lucide-react';
 import { footerSocials, profile } from '../lib/site';
-import { Converge, SplitHeading } from '../components/motion/Reveal';
+import { Converge, Reveal, SplitHeading } from '../components/motion/Reveal';
 
 const rotations = [-4, 10, -9, 6, -7, 8];
 
@@ -57,7 +57,7 @@ export default function Footer() {
           </div>
         </Converge>
 
-        <Converge delay={0.24} className="h-full">
+        <Converge delay={0.24} x={88} className="h-full">
           <div className="social-panel h-full">
             <span className="pointer-events-none absolute -left-14 -top-16 h-48 w-48 rounded-full border border-white/20" />
             <span className="pointer-events-none absolute -bottom-20 -right-10 h-52 w-52 rounded-full border border-white/15" />
@@ -93,27 +93,29 @@ export default function Footer() {
         </Converge>
       </div>
 
-      <div className="mt-3 flex flex-col items-center justify-between gap-4 rounded-[18px] border border-[rgba(23,23,22,0.05)] bg-white/60 px-5 py-4 sm:flex-row">
-        <a href="#top" className="brand">
-          <span className="brand-mark !h-7 !w-7 !text-[0.72rem]">W</span>
-          <span className="brand-name">{profile.name}</span>
-        </a>
-
-        <p className="text-[0.72rem] font-medium uppercase tracking-[0.12em] text-[var(--muted)]">
-          © {year} — All rights reserved
-        </p>
-
-        <div className="flex items-center gap-2">
-          <a className="btn-light !px-4 !py-2 !text-[0.8rem]" href="#top">
-            Back to top
-            <ArrowUp size={13} />
+      <Reveal className="mt-3" animation="fade-up-left" amount={0.2}>
+        <div className="flex flex-col items-center justify-between gap-4 rounded-[18px] border border-[rgba(23,23,22,0.05)] bg-white/60 px-5 py-4 sm:flex-row">
+          <a href="#top" className="brand">
+            <span className="brand-mark !h-7 !w-7 !text-[0.72rem]">W</span>
+            <span className="brand-name">{profile.name}</span>
           </a>
-          <a className="btn-dark !px-4 !py-2 !text-[0.8rem]" href="#contact">
-            Hire me
-            <ArrowUpRight size={13} />
-          </a>
+
+          <p className="text-[0.72rem] font-medium uppercase tracking-[0.12em] text-[var(--muted)]">
+            © {year} — All rights reserved
+          </p>
+
+          <div className="flex items-center gap-2">
+            <a className="btn-light !px-4 !py-2 !text-[0.8rem]" href="#top">
+              Back to top
+              <ArrowUp size={13} />
+            </a>
+            <a className="btn-dark !px-4 !py-2 !text-[0.8rem]" href="#contact">
+              Hire me
+              <ArrowUpRight size={13} />
+            </a>
+          </div>
         </div>
-      </div>
+      </Reveal>
     </footer>
   );
 }

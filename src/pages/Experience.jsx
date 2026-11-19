@@ -6,7 +6,7 @@ export default function Experience() {
   return (
     <section className="section-y section-pad" id="experience">
       <div className="exp-grid">
-        <Reveal className="h-full" direction="left" distance={64} delay={0.06}>
+        <Reveal className="h-full" animation="fade-right" distance={64} delay={0.06}>
           <div className="exp-card card h-full">
             <div>
               <span className="eyebrow">
@@ -31,9 +31,9 @@ export default function Experience() {
           <Reveal
             key={`${item.company}-${item.role}`}
             className="h-full"
-            direction={index % 2 === 0 ? 'up' : 'right'}
-            delay={0.06 + (index % 2) * 0.09}
-            distance={44}
+            animation={['flip-up', 'fade-up', 'zoom-in-left', 'fade-down'][index % 4]}
+            delay={0.06 + index * 0.1}
+            duration={index % 4 === 0 ? 1.35 : 1.05}
           >
             <div className="exp-card card h-full">
               <div className="flex items-start justify-between gap-3">

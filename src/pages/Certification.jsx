@@ -6,7 +6,7 @@ export default function Certification() {
   return (
     <section className="section-y section-pad" id="certifications">
       <div className="mb-9 flex flex-col gap-5 sm:mb-11 sm:flex-row sm:items-end sm:justify-between">
-        <Reveal>
+        <Reveal animation="fade-down">
           <span className="eyebrow">
             <span className="h-1 w-1 rounded-full bg-[var(--teal-deep)]" />
             Credentials
@@ -21,7 +21,7 @@ export default function Certification() {
             ]}
           />
         </Reveal>
-        <Reveal delay={0.08} className="sm:max-w-[19rem]">
+        <Reveal delay={0.08} animation="fade-left" className="sm:max-w-[19rem]">
           <WordsReveal
             className="text-[0.94rem] leading-relaxed text-[var(--ink-soft)]"
             text="Verified programs from Google, IBM and Mimo covering full-stack engineering, AI and technical support."
@@ -33,15 +33,17 @@ export default function Certification() {
 
       <div className="cert-grid">
         {certifications.map((cert, index) => {
-          const direction = ['up', 'left', 'right', 'zoom', 'left'][index % 5];
+          const animation = ['flip-right', 'zoom-in-left', 'fade-up-left', 'zoom-out'][
+            index % 4
+          ];
 
           return (
             <Reveal
               key={cert.title}
               className="h-full"
-              direction={direction}
-              delay={0.06 + (index % 3) * 0.08}
-              distance={direction === 'up' || direction === 'zoom' ? 40 : 56}
+              animation={animation}
+              delay={0.06 + index * 0.1}
+              duration={animation.startsWith('flip') ? 1.35 : 1.05}
             >
             <a
               href={cert.link}

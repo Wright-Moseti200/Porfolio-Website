@@ -50,7 +50,7 @@ export default function Projects() {
   return (
     <section className="section-y section-pad" id="projects">
       <div className="mb-9 flex flex-col gap-5 sm:mb-11 sm:flex-row sm:items-end sm:justify-between">
-        <Reveal>
+        <Reveal animation="fade-down">
           <span className="eyebrow">
             <span className="h-1 w-1 rounded-full bg-[var(--teal-deep)]" />
             Portfolio
@@ -62,7 +62,7 @@ export default function Projects() {
             lines={[{ text: 'Selected' }, { text: 'work', color: 'var(--muted)' }]}
           />
         </Reveal>
-        <Reveal delay={0.08} className="sm:max-w-[19rem]">
+        <Reveal delay={0.08} animation="fade-right" className="sm:max-w-[19rem]">
           <WordsReveal
             className="text-[0.94rem] leading-relaxed text-[var(--ink-soft)]"
             text="A few products I've designed and built end-to-end — from booking platforms to e-commerce and AI tools."
@@ -89,16 +89,25 @@ export default function Projects() {
               : index === 1
                 ? { className: 'work-card--side', media: 'work-media--featured' }
                 : { className: 'work-card--third', media: 'work-media--third' };
-          const direction = ['up', 'right', 'left', 'up', 'right', 'left', 'up'][index % 7];
-          const columnDelay = (index % 3) * 0.08;
+          const animation = [
+            'fade-up',
+            'fade-right',
+            'fade-left',
+            'zoom-in',
+            'flip-up',
+            'fade-up-left',
+            'zoom-in-right',
+            'fade-down-right',
+          ][index % 8];
+          const cascadeDelay = index * 0.06;
 
           return (
             <Reveal
               key={project.title}
               className={`${layout.className} h-full`}
-              direction={direction}
-              delay={0.06 + columnDelay}
-              distance={direction === 'up' ? 40 : 56}
+              animation={animation}
+              delay={0.05 + cascadeDelay}
+              duration={animation.startsWith('flip') ? 1.35 : 1.05}
             >
               <WorkCard project={project} className="h-full" mediaClass={layout.media} />
             </Reveal>

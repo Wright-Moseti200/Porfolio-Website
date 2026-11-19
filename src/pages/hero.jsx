@@ -72,9 +72,10 @@ export default function Hero() {
       <div className="hero-grid">
         <div>
           <Motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, delay: 0.15, ease: [0.32, 0.02, 0.15, 1] }}
+            initial={{ opacity: 0, y: 14, filter: 'blur(6px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 1.1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="mb-6 inline-flex items-center gap-2 rounded-full bg-[var(--teal-soft)] px-3 py-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.17em] text-[#11747d]"
           >
             <span className="relative flex h-1.5 w-1.5">
@@ -85,6 +86,7 @@ export default function Hero() {
           </Motion.div>
 
           <SplitHeading
+            inView
             className="hero-title"
             ariaLabel="Hi, I'm a fullstack developer"
             lines={[
@@ -96,9 +98,10 @@ export default function Hero() {
 
           <Motion.p
             className="hero-copy mt-7"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.25, delay: 0.7, ease: [0.32, 0.02, 0.15, 1] }}
+            initial={{ opacity: 0, y: 16, filter: 'blur(8px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 1.25, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             I have 2+ years of experience building useful and mindful web products with
             startups and known brands — from elegant interfaces to robust APIs.
@@ -106,9 +109,10 @@ export default function Hero() {
 
           <Motion.div
             className="mt-8 flex flex-wrap items-center gap-3"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.25, delay: 0.84, ease: [0.32, 0.02, 0.15, 1] }}
+            initial={{ opacity: 0, y: 16, filter: 'blur(8px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 1.25, delay: 0.84, ease: [0.22, 1, 0.36, 1] }}
           >
             <Magnetic>
               <a className="btn-dark" href="#contact">
@@ -130,7 +134,11 @@ export default function Hero() {
         </div>
 
         <div ref={cardsRef}>
-          <Stagger className="hero-cards" amount={0.1}>
+          <Stagger
+            className="hero-cards"
+            amount={0.1}
+            variants={['fade-up', 'fade-right', 'fade-left', 'fade-zoom-in']}
+          >
             <div className="hero-cards-top">
               <StaggerItem className="h-full">
                 <Tilt className="h-full">

@@ -6,55 +6,151 @@ import { createContext, useContext, useRef } from 'react';
 const EASE = [0.22, 1, 0.36, 1];
 
 /* ------------------------------------------------------------------
-   Shared reveal engine.
+   Shared reveal engine — the complete AOS animation catalog, powered by
+   Framer Motion so every reveal also replays on the way back up.
 
-   Every reveal now replays in BOTH scroll directions: elements fade and
-   drift out when they leave the viewport, then animate back in when they
-   re-enter. The hidden state is deliberately directional so exits read as
-   the reverse of the entrance instead of a flat fade.
+   Supported animations:
+     fade, fade-up, fade-down, fade-right, fade-left,
+     fade-up-right, fade-up-left, fade-down-right, fade-down-left,
+     zoom-in(-up|-down|-left|-right), zoom-out(-up|-down|-left|-right),
+     flip-left, flip-right, flip-up, flip-down,
+     slide-up, slide-down, slide-left, slide-right,
+     and fade-zoom-in.
 ------------------------------------------------------------------ */
-const directionOffset = {
-  up: (d) => ({ x: 0, y: d }),
-  down: (d) => ({ x: 0, y: -d }),
-  left: (d) => ({ x: -d, y: 0 }),
-  right: (d) => ({ x: d, y: 0 }),
-  zoom: () => ({ x: 0, y: 0 }),
-  fade: () => ({ x: 0, y: 0 }),
+const AOS_ANIMATIONS = {
+  fade: { from: () => ({}), blur: 8 },
+  'fade-zoom-in': { from: () => ({ scale: 0.9 }), blur: 8 },
+  'fade-up': { from: (d) => ({ y: d }) },
+  'fade-down': { from: (d) => ({ y: -d }) },
+  'fade-right': { from: (d) => ({ x: -d }) },
+  'fade-left': { from: (d) => ({ x: d }) },
+  'fade-up-right': { from: (d) => ({ x: -d, y: d }) },
+  'fade-up-left': { from: (d) => ({ x: d, y: d }) },
+  'fade-down-right': { from: (d) => ({ x: -d, y: -d }) },
+  'fade-down-left': { from: (d) => ({ x: d, y: -d }) },
+  'zoom-in': { from: () => ({ scale: 0.6 }), blur: 4 },
+  'zoom-in-up': { from: (d) => ({ y: d, scale: 0.6 }), blur: 4 },
+  'zoom-in-down': { from: (d) => ({ y: -d, scale: 0.6 }), blur: 4 },
+  'zoom-in-right': { from: (d) => ({ x: -d, scale: 0.6 }), blur: 4 },
+  'zoom-in-left': { from: (d) => ({ x: d, scale: 0.6 }), blur: 4 },
+  'zoom-out': { from: () => ({ scale: 1.2 }), blur: 4 },
+  'zoom-out-up': { from: (d) => ({ y: d, scale: 1.2 }), blur: 4 },
+  'zoom-out-down': { from: (d) => ({ y: -d, scale: 1.2 }), blur: 4 },
+  'zoom-out-right': { from: (d) => ({ x: -d, scale: 1.2 }), blur: 4 },
+  'zoom-out-left': { from: (d) => ({ x: d, scale: 1.2 }), blur: 4 },
+  'flip-left': { from: () => ({ rotateY: -100 }), blur: 0, perspective: 2200 },
+  'flip-right': { from: () => ({ rotateY: 100 }), blur: 0, perspective: 2200 },
+  'flip-up': { from: () => ({ rotateX: -100 }), blur: 0, perspective: 2200 },
+  'flip-down': { from: () => ({ rotateX: 100 }), blur: 0, perspective: 2200 },
+  'slide-up': { from: () => ({ y: '100%' }), blur: 0, scale: 1 },
+  'slide-down': { from: () => ({ y: '-100%' }), blur: 0, scale: 1 },
+  'slide-right': { from: () => ({ x: '-100%' }), blur: 0, scale: 1 },
+  'slide-left': { from: () => ({ x: '100%' }), blur: 0, scale: 1 },
 };
 
+// Old names used by earlier versions of the site.
+const LEGACY_NAMES = {
+  up: 'fade-up',
+  down: 'fade-down',
+  left: 'fade-right',
+  right: 'fade-left',
+  zoom: 'zoom-in',
+};
+
+const EASINGS = {
+  linear: 'linear',
+  ease: [0.25, 0.1, 0.25, 1],
+  'ease-in': [0.42, 0, 1, 1],
+  'ease-out': [0, 0, 0.58, 1],
+  'ease-in-out': [0.42, 0, 0.58, 1],
+  'ease-in-back': [0.6, -0.28, 0.735, 0.045],
+  'ease-out-back': [0.175, 0.885, 0.32, 1.275],
+  'ease-in-out-back': [0.68, -0.55, 0.265, 1.55],
+  'ease-in-sine': [0.47, 0, 0.745, 0.715],
+  'ease-out-sine': [0.39, 0.575, 0.565, 1],
+  'ease-in-out-sine': [0.445, 0.05, 0.55, 0.95],
+  'ease-in-quad': [0.55, 0.085, 0.68, 0.53],
+  'ease-out-quad': [0.25, 0.46, 0.45, 0.94],
+  'ease-in-out-quad': [0.455, 0.03, 0.515, 0.955],
+  'ease-out-cubic': [0.215, 0.61, 0.355, 1],
+  'ease-in-cubic': [0.55, 0.055, 0.675, 0.19],
+  'ease-in-out-cubic': [0.645, 0.045, 0.355, 1],
+  'ease-out-quart': [0.165, 0.84, 0.44, 1],
+  'ease-in-quart': [0.895, 0.03, 0.685, 0.22],
+  'ease-in-out-quart': [0.77, 0, 0.175, 1],
+};
+
+function resolveEase(easing) {
+  if (!easing) return EASE;
+  return EASINGS[easing] || EASE;
+}
+
+function resolveAnimation(animation) {
+  if (AOS_ANIMATIONS[animation]) return animation;
+  return LEGACY_NAMES[animation] || 'fade-up';
+}
+
 function revealVariants({
-  direction = 'up',
-  distance = 34,
+  animation = 'fade-up',
+  distance = 46,
   blur = 8,
   scale = 0.985,
   rotate = 0,
   duration = 1.05,
   delay = 0,
-  exitDuration = 0.5,
+  exitDuration = 0.55,
+  easing,
+  reduced = false,
 } = {}) {
-  const zoom = direction === 'zoom';
-  const fade = direction === 'fade';
-  const from = (directionOffset[direction] || directionOffset.up)(distance);
-  const fromScale = zoom ? 0.9 : fade ? 1 : scale;
-  const fromBlur = fade ? 0 : Math.max(zoom ? 10 : 0, blur);
+  const ease = resolveEase(easing);
+
+  // Reduced motion keeps the fade (which helps with orientation) but drops
+  // every transform, blur and flip from the catalog.
+  if (reduced) {
+    return {
+      hidden: { opacity: 0, transition: { duration: exitDuration, ease } },
+      show: { opacity: 1, transition: { duration, delay, ease } },
+    };
+  }
+
+  const name = resolveAnimation(animation);
+  const preset = AOS_ANIMATIONS[name];
+  const from = preset.from(distance);
+  const fromScale = from.scale ?? preset.scale ?? scale;
+  const fromBlur = preset.blur ?? blur;
+  const flip = name.startsWith('flip');
 
   return {
     hidden: {
       opacity: 0,
-      ...from,
+      x: 0,
+      y: 0,
+      rotateX: 0,
+      rotateY: 0,
       scale: fromScale,
       rotate,
+      ...from,
       filter: `blur(${fromBlur}px)`,
-      transition: { duration: exitDuration, ease: EASE },
+      ...(preset.perspective
+        ? {
+            transformPerspective: preset.perspective,
+            backfaceVisibility: 'hidden',
+          }
+        : {}),
+      ...(flip ? { transformStyle: 'preserve-3d' } : {}),
+      transition: { duration: exitDuration, ease },
     },
     show: {
       opacity: 1,
       x: 0,
       y: 0,
+      rotateX: 0,
+      rotateY: 0,
       scale: 1,
       rotate: 0,
       filter: 'blur(0px)',
-      transition: { duration, delay, ease: EASE },
+      ...(preset.perspective ? { transformPerspective: preset.perspective } : {}),
+      transition: { duration, delay, ease },
     },
   };
 }
@@ -65,33 +161,40 @@ export function Reveal({
   children,
   className = '',
   delay = 0,
-  y = 30,
+  animation,
+  direction,
+  easing,
+  distance = 46,
   blur = 8,
-  direction = 'up',
-  distance,
   scale = 0.985,
   rotate = 0,
   amount = VIEWPORT.amount,
   once = VIEWPORT.once,
-  margin = VIEWPORT.margin,
+  margin,
+  offset,
   duration = 1.05,
 }) {
   const reduced = useReducedMotion();
+  const name = animation || direction || 'fade-up';
+  const viewportMargin =
+    margin ?? (offset !== undefined ? `0px 0px -${offset}px 0px` : VIEWPORT.margin);
 
   return (
     <Motion.div
       className={className}
       initial="hidden"
       whileInView="show"
-      viewport={{ once, amount, margin }}
+      viewport={{ once, amount, margin: viewportMargin }}
       variants={revealVariants({
-        direction,
-        distance: distance ?? (direction === 'up' || direction === 'down' ? y : 46),
-        blur: reduced ? 0 : blur,
-        scale: reduced ? 1 : scale,
+        animation: name,
+        distance,
+        blur,
+        scale,
         rotate,
         duration,
         delay,
+        easing,
+        reduced,
       })}
     >
       {children}
@@ -103,11 +206,11 @@ export function Reveal({
    Stagger — one observer, many cards.
 
    The first visible card waits `delay` seconds, then each following card
-   inherits a fixed step (`stagger`). Cards can share a direction or rotate
-   through a set of variants (`variants={['up', 'left', 'right', 'zoom']}`)
-   so a grid feels composed instead of mechanical.
+   inherits a fixed step (`stagger`). Cards can share one animation or rotate
+   through the catalog, e.g.
+   variants={['fade-up', 'flip-left', 'zoom-in', 'fade-down-left']}.
 ------------------------------------------------------------------ */
-const StaggerContext = createContext({ variantNames: ['up'], reduced: false });
+const StaggerContext = createContext({ variantNames: ['fade-up'], reduced: false });
 
 export function Stagger({
   children,
@@ -116,10 +219,13 @@ export function Stagger({
   once = false,
   delay = 0.12,
   stagger = 0.1,
-  variants: variantNames = ['up'],
+  variants: variantNames = ['fade-up'],
   margin = VIEWPORT.margin,
+  offset,
 }) {
   const reduced = useReducedMotion();
+  const viewportMargin =
+    margin ?? (offset !== undefined ? `0px 0px -${offset}px 0px` : VIEWPORT.margin);
   const parent = {
     hidden: {},
     show: {
@@ -137,7 +243,7 @@ export function Stagger({
         variants={parent}
         initial="hidden"
         whileInView="show"
-        viewport={{ once, amount, margin }}
+        viewport={{ once, amount, margin: viewportMargin }}
       >
         {children}
       </Motion.div>
@@ -150,30 +256,30 @@ export function StaggerItem({
   className = '',
   index = 0,
   variant,
-  distance,
+  animation,
+  distance = 46,
   blur = 8,
   scale = 0.985,
-  rotate,
+  rotate = 0,
   duration = 1.05,
+  easing,
   ...props
 }) {
   const { variantNames, reduced } = useContext(StaggerContext);
-  const name = variant || variantNames[index % variantNames.length];
-  const tilt =
-    rotate ?? (name === 'left' ? -1.1 : name === 'right' ? 1.1 : name === 'zoom' ? 0 : 0);
-  const spread =
-    distance ?? (name === 'left' || name === 'right' ? 52 : name === 'zoom' ? 0 : 34);
+  const name = animation || variant || variantNames[index % variantNames.length];
 
   return (
     <Motion.div
       className={className}
       variants={revealVariants({
-        direction: name,
-        distance: spread,
-        blur: reduced ? 0 : blur,
-        scale: reduced ? 1 : scale,
-        rotate: reduced ? 0 : tilt,
+        animation: name,
+        distance,
+        blur,
+        scale,
+        rotate,
         duration,
+        easing,
+        reduced,
       })}
       {...props}
     >
@@ -203,12 +309,13 @@ export function Converge({
       whileInView="show"
       viewport={{ once, amount, margin: VIEWPORT.margin }}
       variants={revealVariants({
-        direction: x < 0 ? 'left' : 'right',
+        animation: x < 0 ? 'fade-right' : 'fade-left',
         distance: Math.abs(x) || 0,
-        blur: reduced ? 0 : 6,
-        scale: reduced ? 1 : 0.98,
+        blur: 6,
+        scale: 0.98,
         duration,
         delay,
+        reduced,
       })}
     >
       {children}
